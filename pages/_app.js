@@ -14,6 +14,10 @@ function MyApp({ Component, pageProps }) {
         <Head>
           <title>Kew side project</title>
           <link
+            href="https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two&display=swap"
+            rel="stylesheet"
+          />
+          <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />

@@ -21,9 +21,7 @@ function Dashboard(props) {
 Dashboard.getInitialProps = async (ctx) => {
   const { req, query } = ctx;
 
-  const { access_token } = req.cookies;
-
-  return { user: { ...query.user }, access_token: access_token };
+  return { user: { ...query.user } };
 };
 
 const mapDispatchToProps = (dispatch) => ({

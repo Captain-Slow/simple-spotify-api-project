@@ -2,6 +2,8 @@ import Button from "@material-ui/core/Button";
 import Link from "next/link";
 import Typography from "@material-ui/core/Typography";
 
+import SpotifyLogo from "../shared/SpotifyLogo";
+
 import styles from "../../styles/Home.module.css";
 
 function LoginComponent() {
@@ -15,8 +17,9 @@ function LoginComponent() {
               color="inherit"
               href="/login_spotify"
               size="large"
+              endIcon={<SpotifyLogo height={20} />}
             >
-              Login thru Spotify
+              Login thru
             </Button>
           </Link>
         </div>
