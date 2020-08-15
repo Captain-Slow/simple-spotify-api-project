@@ -4,18 +4,22 @@ import Toolbar from "@material-ui/core/Toolbar";
 import SpotifyLogo from "./SpotifyLogo";
 import UserAvatar from "./UserAvatar";
 
+import styles from "../../styles/AppBar.module.css";
+
 function CustomAppBar() {
   return (
-    <div style={{ flexGrow: 1 }}>
-      <AppBar position="fixed" elevation={0}>
-        <Toolbar>
-          <div style={{ flexGrow: 1, textAlign: "center" }}>
+    <AppBar position="static" elevation={0}>
+      <Toolbar className={styles.toolBar}>
+        <div className={styles.toolBarContainer}>
+          <div className={styles.toolBarAppLogoContainer}>
             <SpotifyLogo height={30} />
           </div>
-          <UserAvatar />
-        </Toolbar>
-      </AppBar>
-    </div>
+          <div className={styles.toolBarUserAvatarContainer}>
+            <UserAvatar />
+          </div>
+        </div>
+      </Toolbar>
+    </AppBar>
   );
 }
 

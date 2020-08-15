@@ -1,0 +1,21 @@
+.toolBar {
+  height: 64px
+}
+
+.toolBarContainer {
+  flex-grow: 1;
+  text-align: center;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.toolBarAppLogoContainer {
+  flex-grow: 1;
+  text-align: center
+}
+
+.toolBarUserAvatarContainer {
+  position: absolute;
+  right: 0;
+}

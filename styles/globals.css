@@ -2,7 +2,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background-color: #191414
+  background-color: #191414;
+  height: 100%
 }
 
 a {
@@ -12,4 +13,16 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+#__next {
+  height: 100%;
+}
+
+#app-bar-container {
+  flex: 0 1 100%;
+}
+
+.main-container {
+  flex: 0 1 100%;
 }
