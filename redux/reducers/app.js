@@ -23,6 +23,16 @@ export const reducer = (state = initialState, action) => {
       };
     }
     case types.SET_PLAYBACK_DATA: {
+      let playBack = action.payload.playBack;
+
+      let finalAtristString = "";
+
+      for (let [i, artist] of playBack.item.artists.entries()) {
+        finalAtristString += `${i === 0 ? artist.name : `, ${artist.name}`}`;
+      }
+
+      playBack.item.artists_modified = finalAtristString;
+
       return {
         ...state,
         playBack: action.payload.playBack,

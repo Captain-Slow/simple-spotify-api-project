@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import NowPlayingComponent from "../components/dashboard/NowPlayingComponent";
 import { setUser, setUserPlayBack } from "../redux/actions/app";
+
+import styles from "../styles/Dashboard.module.css";
 
 function Dashboard(props) {
   const { setUser, user, setUserPlayBack, currentPlayback } = props;
@@ -17,7 +20,11 @@ function Dashboard(props) {
     initFunction();
   }, [setUser, setUserPlayBack]);
 
-  return <div></div>;
+  return (
+    <div className={styles.dashboardContainer}>
+      <NowPlayingComponent />
+    </div>
+  );
 }
 
 Dashboard.getInitialProps = async (ctx) => {

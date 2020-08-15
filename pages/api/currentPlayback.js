@@ -1,5 +1,3 @@
-import e from "express";
-
 export default async (req, res) => {
   const refreshToken = "refresh_token";
 
@@ -7,8 +5,6 @@ export default async (req, res) => {
 
   let storedAccessKey =
     req.cookies[accessToken] === undefined ? null : req.cookies[accessToken];
-
-  console.log(req.cookies);
 
   if (storedAccessKey !== null) {
     const getUserPlaybackRes = await fetch(

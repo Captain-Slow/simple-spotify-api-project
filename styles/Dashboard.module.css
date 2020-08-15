@@ -1,0 +1,32 @@
+.dashboardContainer {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  color: white
+}
+
+.nowPlayingContainer {
+  flex: 1;
+  text-align: center;
+  padding-bottom: 64px;
+}
+
+.albumImgContainer {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+}
+
+.albumImg {
+  height: 200px
+}
+
+.albumDetailContainer {
+  margin: 16px 0
+}
+
+.artistTextContainer {
+  color: #bdbdbd
+}
