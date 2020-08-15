@@ -42,3 +42,10 @@ export const setUser = (userData) => async (dispatch, getState) => {
     payload: { user: { ...userData } },
   });
 };
+
+export const setUserPlayBack = (playbackData) => async (dispatch, getState) => {
+  return dispatch({
+    type: types.SET_PLAYBACK_DATA,
+    payload: { playBack: { ...playbackData } },
+  });
+};

@@ -2,6 +2,7 @@ import * as types from "../types/app";
 
 const initialState = {
   user: {},
+  playBack: {},
   isAuthenticated: false,
   snackbar: {
     show: false,
@@ -19,6 +20,12 @@ export const reducer = (state = initialState, action) => {
         ...state,
         user: action.payload.user,
         isAuthenticated: true,
+      };
+    }
+    case types.SET_PLAYBACK_DATA: {
+      return {
+        ...state,
+        playBack: action.payload.playBack,
       };
     }
     case types.SHOW_SNACKBAR: {
