@@ -1,6 +1,8 @@
 import * as types from "../types/app";
 
 const initialState = {
+  user: {},
+  isAuthenticated: false,
   snackbar: {
     show: false,
     func: null,
@@ -12,6 +14,13 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.SET_USER_DATA: {
+      return {
+        ...state,
+        user: action.payload.user,
+        isAuthenticated: true,
+      };
+    }
     case types.SHOW_SNACKBAR: {
       return {
         ...state,

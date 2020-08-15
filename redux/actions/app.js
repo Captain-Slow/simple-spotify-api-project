@@ -36,17 +36,9 @@ export const resetSnackbar = () => async (dispatch, getState) => {
   });
 };
 
-export const fetchTokens = () => async (dispatch, getState) => {
-  dispatch({
-    type: types.FETCHING_TOKENS,
+export const setUser = (userData) => async (dispatch, getState) => {
+  return dispatch({
+    type: types.SET_USER_DATA,
+    payload: { user: { ...userData } },
   });
-
-  return api
-    .get(`fetch_token`)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 };

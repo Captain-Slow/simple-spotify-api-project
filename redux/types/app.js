@@ -1,4 +1,4 @@
 export const SHOW_SNACKBAR = "SHOW_SNACKBAR";
 export const HIDE_SNACKBAR = "HIDE_SNACKBAR";
 export const RESET_SNACKBAR = "RESET_SNACKBAR";
-export const FETCHING_TOKENS = "FETCHING_TOKENS";
+export const SET_USER_DATA = "SET_USER_DATA";
