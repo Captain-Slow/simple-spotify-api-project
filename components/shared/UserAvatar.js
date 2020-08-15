@@ -13,8 +13,6 @@ import styles from "../../styles/UserAvatar.module.css";
 function UserAvatar(props) {
   const { isAuthenticated, user } = props;
 
-  console.log(user);
-
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenu = (event) => {

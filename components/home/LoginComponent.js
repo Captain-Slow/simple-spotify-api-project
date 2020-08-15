@@ -1,25 +1,24 @@
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
+import Link from "next/link";
 import Typography from "@material-ui/core/Typography";
 
 import styles from "../../styles/Home.module.css";
 
-function LoginComponent(props) {
-  const { cookies } = props;
-
+function LoginComponent() {
   return (
     <div className={styles.loginComponentContainer}>
       <div>
         <div className="button-center-container">
-          <Button
-            variant="outlined"
-            color="inherit"
-            component={Link}
-            href="/login_spotify"
-            size="large"
-          >
-            Login thru Spotify
-          </Button>
+          <Link href="/login_spotify">
+            <Button
+              variant="outlined"
+              color="inherit"
+              href="/login_spotify"
+              size="large"
+            >
+              Login thru Spotify
+            </Button>
+          </Link>
         </div>
         <div className={styles.disclaimerContainer}>
           <Typography variant="body2">
