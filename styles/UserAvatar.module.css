@@ -1,0 +1,11 @@
+.menuItem {
+  padding: "0 24px";
+}
+
+.menuItem:hover {
+  text-decoration: "none"
+}
+
+.menuItem span {
+  font-size: 0.9rem
+}

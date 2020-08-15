@@ -1,18 +1,37 @@
-import Link from 'next/link'
+import Head from "next/head";
+import Link from "next/link";
 
-export default function Home() {
+import LoginComponent from "../components/LoginComponent";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
+function Home() {
   return (
-    <ul>
-      <li>
-        <Link href="/b" as="/a">
-          <a>a</a>
-        </Link>
-      </li>
-      <li>
-        <Link href="/a" as="/b">
-          <a>b</a>
-        </Link>
-      </li>
-    </ul>
-  )
+    <>
+      <Head>
+        <title>Kew side project</title>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
+      </Head>
+      <div>
+        <ThemeProvider theme={theme}>
+          <LoginComponent />
+        </ThemeProvider>
+      </div>
+    </>
+  );
 }
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#191414",
+    },
+    secondary: {
+      main: "#1DB954",
+    },
+  },
+});
+
+export default Home;

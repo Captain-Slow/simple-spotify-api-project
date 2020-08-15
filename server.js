@@ -29,7 +29,7 @@ app.prepare().then(() => {
     return app.render(req, res, "/b", req.query);
   });
 
-  server.get("/login", (req, res) => {
+  server.get("/login_spotify", (req, res) => {
     var state = generateRandomString(16);
 
     res.cookie(stateKey, state);
