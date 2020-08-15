@@ -7,10 +7,14 @@
     "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "next": "latest",
+    "querystring": "^0.2.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "request": "^2.88.2"
   }
 }
