@@ -25,4 +25,16 @@ a {
 
 .main-container {
   flex: 0 1 100%;
+  height: calc(100% - 64px);
+}
+
+.main-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: 100%;
+}
+
+.button-center-container {
+  text-align: center
 }

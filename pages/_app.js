@@ -20,7 +20,9 @@ function MyApp({ Component, pageProps }) {
         </Head>
         <AppBar />
         <div className="main-container">
-          <Component {...pageProps} />
+          <div className="main-wrapper">
+            <Component {...pageProps} />
+          </div>
         </div>
       </ThemeProvider>
     </StoreProvider>
