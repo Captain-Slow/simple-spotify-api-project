@@ -6,6 +6,9 @@
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js"
   },
+  "engines": {
+    "node": ">=10.x"
+  },
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
