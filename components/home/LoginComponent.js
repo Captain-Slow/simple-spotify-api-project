@@ -1,20 +1,11 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 
-import { fetchTokens } from "../../redux/actions/app";
-
 import styles from "../../styles/Home.module.css";
 
 function LoginComponent(props) {
-  const { fetchTokens } = props;
-
-  // useEffect(() => {
-  //   fetchTokens();
-  // }, [fetchTokens]);
+  const { cookies } = props;
 
   return (
     <div className={styles.loginComponentContainer}>
@@ -41,8 +32,4 @@ function LoginComponent(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchTokens: bindActionCreators(fetchTokens, dispatch),
-});
-
-export default connect(null, mapDispatchToProps)(LoginComponent);
+export default LoginComponent;
