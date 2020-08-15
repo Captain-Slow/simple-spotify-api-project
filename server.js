@@ -16,6 +16,9 @@ const redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
 
 const stateKey = "spotify_auth_state";
 
+const refreshToken = "refresh_token";
+const accessToken = "access_token";
+
 app.prepare().then(() => {
   const server = express();
 
@@ -33,6 +36,10 @@ app.prepare().then(() => {
     var state = generateRandomString(16);
 
     res.cookie(stateKey, state);
+
+    res.clearCookie(accessToken);
+
+    res.clearCookie(refreshToken);
 
     // your application requests authorization
     var scope = "user-read-private user-read-email user-read-playback-state";
@@ -67,6 +74,7 @@ app.prepare().then(() => {
       );
     } else {
       res.clearCookie(stateKey);
+
       var authOptions = {
         url: "https://accounts.spotify.com/api/token",
         form: {
@@ -86,6 +94,10 @@ app.prepare().then(() => {
         if (!error && response.statusCode === 200) {
           var access_token = body.access_token,
             refresh_token = body.refresh_token;
+
+          res.cookie(accessToken, body.access_token);
+
+          res.cookie(refreshToken, body.refresh_token);
 
           var options = {
             url: "https://api.spotify.com/v1/me",
@@ -139,6 +151,7 @@ app.prepare().then(() => {
     request.post(authOptions, function (error, response, body) {
       if (!error && response.statusCode === 200) {
         var access_token = body.access_token;
+
         res.send({
           access_token: access_token,
         });

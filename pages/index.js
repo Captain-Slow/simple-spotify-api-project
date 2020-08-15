@@ -1,10 +1,19 @@
 import Head from "next/head";
-import Link from "next/link";
-
-import LoginComponent from "../components/LoginComponent";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import React, { useEffect } from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-function Home() {
+import LoginComponent from "../components/LoginComponent";
+import { fetchTokens } from "../redux/actions/app";
+
+function Home(props) {
+  const { fetchTokens } = props;
+
+  useEffect(() => {
+    fetchTokens();
+  }, [fetchTokens]);
+
   return (
     <>
       <Head>
@@ -34,4 +43,8 @@ const theme = createMuiTheme({
   },
 });
 
-export default Home;
+const mapDispatchToProps = (dispatch) => ({
+  fetchTokens: bindActionCreators(fetchTokens, dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(Home);
