@@ -49,3 +49,19 @@ export const setUserPlayBack = (playbackData) => async (dispatch, getState) => {
     payload: { playBack: { ...playbackData } },
   });
 };
+
+export const fetchUserPlayBack = () => async (dispatch, getState) => {
+  return api
+    .get("currentPlayback")
+    .then((response) => {
+      return dispatch({
+        type: types.SET_PLAYBACK_DATA,
+        payload: { playBack: { ...response.data.playback } },
+      });
+    })
+    .catch((error) => {
+      return dispatch({
+        type: types.SET_PLAYBACK_DATA_FAILED,
+      });
+    });
+};

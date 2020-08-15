@@ -4,11 +4,19 @@ import { bindActionCreators } from "redux";
 import Card from "@material-ui/core/Card";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import RefreshIcon from "@material-ui/icons/Refresh";
+
+import { fetchUserPlayBack } from "../../redux/actions/app";
 
 import styles from "../../styles/Dashboard.module.css";
 
 function NowPlayingComponent(props) {
-  const { playBack } = props;
+  const { playBack, fetchUserPlayBack } = props;
+
+  const refreshButtonHandler = async () => {
+    await fetchUserPlayBack();
+  };
 
   return (
     <div className={styles.nowPlayingContainer}>
@@ -34,6 +42,17 @@ function NowPlayingComponent(props) {
                 {playBack.item.artists_modified}
               </Typography>
             </div>
+            <div className={styles.refreshButtonContainer}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                size="large"
+                onClick={refreshButtonHandler}
+                endIcon={<RefreshIcon />}
+              >
+                Refresh
+              </Button>
+            </div>
           </div>
         </>
       ) : (
@@ -49,4 +68,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(NowPlayingComponent);
+const mapDispatchToProps = (dispatch) => ({
+  fetchUserPlayBack: bindActionCreators(fetchUserPlayBack, dispatch),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NowPlayingComponent);
