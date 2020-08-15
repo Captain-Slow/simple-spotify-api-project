@@ -1,4 +1,3 @@
-import api from "../api/axiosOrders";
 import LoginComponent from "../components/home/LoginComponent";
 
 function Home(props) {

@@ -10,12 +10,11 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const client_id = process.env.CLIENT_ID; // Your client id
-const client_secret = process.env.CLIENT_SECRET; // Your secret
-const redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
+const client_id = process.env.CLIENT_ID;
+const client_secret = process.env.CLIENT_SECRET;
+const redirect_uri = process.env.REDIRECT_URI;
 
 const stateKey = "spotify_auth_state";
-
 const refreshToken = "refresh_token";
 const accessToken = "access_token";
 
@@ -24,12 +23,37 @@ app.prepare().then(() => {
 
   server.use(cors()).use(cookieParser());
 
-  server.get("/a", (req, res) => {
-    return app.render(req, res, "/a", req.query);
-  });
+  server.get("/dashboard", async (req, res) => {
+    let storedAccessKey =
+      req.cookies[accessToken] === undefined ? null : req.cookies[accessToken];
 
-  server.get("/b", (req, res) => {
-    return app.render(req, res, "/b", req.query);
+    if (storedAccessKey !== null) {
+      const getUserRes = await fetch("https://api.spotify.com/v1/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${storedAccessKey}`,
+        },
+        json: true,
+      });
+
+      const json = await getUserRes.json();
+
+      if (json.error === undefined) {
+        const query = {
+          user: json,
+        };
+
+        return app.render(req, res, "/dashboard", query);
+      } else {
+        await res.clearCookie(accessToken);
+
+        await res.clearCookie(refreshToken);
+
+        res.redirect("/");
+      }
+    } else {
+      res.redirect("/");
+    }
   });
 
   server.get("/login_spotify", (req, res) => {
@@ -41,7 +65,6 @@ app.prepare().then(() => {
 
     res.clearCookie(refreshToken);
 
-    // your application requests authorization
     var scope = "user-read-private user-read-email user-read-playback-state";
 
     res.redirect(
@@ -57,8 +80,6 @@ app.prepare().then(() => {
   });
 
   server.get("/callback", (req, res) => {
-    // your application requests refresh and access tokens after checking the state parameter
-
     var code = req.query.code || null;
 
     var state = req.query.state || null;
@@ -95,29 +116,11 @@ app.prepare().then(() => {
           var access_token = body.access_token,
             refresh_token = body.refresh_token;
 
-          res.cookie(accessToken, body.access_token);
+          res.cookie(accessToken, access_token);
 
-          res.cookie(refreshToken, body.refresh_token);
+          res.cookie(refreshToken, refresh_token);
 
-          var options = {
-            url: "https://api.spotify.com/v1/me",
-            headers: { Authorization: "Bearer " + access_token },
-            json: true,
-          };
-
-          // use the access token to access the Spotify Web API
-          request.get(options, function (error, response, body) {
-            console.log(body);
-          });
-
-          // we can also pass the token to the browser to make requests from there
-          res.redirect(
-            `${process.env.REDIRECT_URL}/#` +
-              querystring.stringify({
-                access_token: access_token,
-                refresh_token: refresh_token,
-              })
-          );
+          res.redirect(`${process.env.REDIRECT_URL}`);
         } else {
           res.redirect(
             "/#" +
@@ -131,7 +134,6 @@ app.prepare().then(() => {
   });
 
   server.get("/refresh_token", function (req, res) {
-    // requesting access token from refresh token
     var refresh_token = req.query.refresh_token;
 
     var authOptions = {
@@ -163,20 +165,20 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  const PORT = process.env.PORT || 3000;
-
-  server.listen(PORT, () => {
-    console.log(`Our app is running on port ${PORT}`);
+  server.listen(port, () => {
+    console.log(`Our app is running on port ${port}`);
   });
 });
 
 function generateRandomString(length) {
   var text = "";
+
   var possible =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   for (var i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
+
   return text;
 }
