@@ -48,21 +48,12 @@ function UserAvatar() {
         onClose={handleClose}
       >
         <MenuItem
-          style={{}}
           className={styles.menuItem}
           component={Link}
           style={{ textDecoration: "none" }}
-          href="/a"
+          href="/log_out"
         >
-          <ListItemText primary="Profile" />
-        </MenuItem>
-        <MenuItem
-          className={styles.menuItem}
-          component={Link}
-          style={{ textDecoration: "none" }}
-          href="/b"
-        >
-          <ListItemText primary="Your favorite post" />
+          <ListItemText primary="Log Out" />
         </MenuItem>
       </Menu>
     </div>

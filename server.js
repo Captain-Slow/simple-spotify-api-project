@@ -23,6 +23,35 @@ app.prepare().then(() => {
 
   server.use(cors()).use(cookieParser());
 
+  server.get("/", async (req, res) => {
+    let storedAccessKey =
+      req.cookies[accessToken] === undefined ? null : req.cookies[accessToken];
+
+    if (storedAccessKey !== null) {
+      const getUserRes = await fetch("https://api.spotify.com/v1/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${storedAccessKey}`,
+        },
+        json: true,
+      });
+
+      const json = await getUserRes.json();
+
+      if (json.error === undefined) {
+        res.redirect("/dashboard");
+      } else {
+        await res.clearCookie(accessToken);
+
+        await res.clearCookie(refreshToken);
+
+        return app.render(req, res, "/", req.query);
+      }
+    } else {
+      return app.render(req, res, "/", req.query);
+    }
+  });
+
   server.get("/dashboard", async (req, res) => {
     let storedAccessKey =
       req.cookies[accessToken] === undefined ? null : req.cookies[accessToken];
@@ -54,6 +83,14 @@ app.prepare().then(() => {
     } else {
       res.redirect("/");
     }
+  });
+
+  server.get("/log_out", async (req, res) => {
+    await res.clearCookie(accessToken);
+
+    await res.clearCookie(refreshToken);
+
+    res.redirect("/");
   });
 
   server.get("/login_spotify", (req, res) => {

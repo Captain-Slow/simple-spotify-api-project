@@ -1,5 +1,6 @@
 .menuItem {
   padding: "0 24px";
+  min-width: 120px;
 }
 
 .menuItem:hover {
@@ -7,5 +8,6 @@
 }
 
 .menuItem span {
-  font-size: 0.9rem
+  font-size: 0.9rem;
+  text-align: center
 }
