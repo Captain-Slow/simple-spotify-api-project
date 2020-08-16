@@ -34,3 +34,16 @@
 .refreshButtonContainer {
   margin: 16px 0 0
 }
+
+.deviceNameContainer {
+  margin: 16px 0;
+  color: #bdbdbd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconDeviceContainer {
+  margin-left: 8px;
+  display: flex;
+}
