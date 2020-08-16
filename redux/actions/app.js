@@ -1,4 +1,5 @@
 import api from "../../api/axiosOrders";
+
 import * as types from "../types/app";
 
 export const showSnackbar = (message, type = "", func = undefined) => async (
@@ -78,10 +79,8 @@ export const fetchUserPlayBack = () => async (dispatch, getState) => {
           response.data.error === "Invalid tokens" ||
           response.data.error === "No token"
         ) {
-          window.location.href = "/log_out";
-
           return dispatch({
-            type: types.SET_PLAYBACK_DATA_FAILED,
+            type: types.SET_PLAYBACK_DATA_FAILED_INVALID_TOKEN,
           });
         } else {
           return dispatch({

@@ -10,15 +10,40 @@ import ComputerIcon from "@material-ui/icons/Computer";
 import SmartphoneIcon from "@material-ui/icons/Smartphone";
 import SpeakerIcon from "@material-ui/icons/Speaker";
 
-import { fetchUserPlayBack } from "../../redux/actions/app";
+import { fetchUserPlayBack, showSnackbar } from "../../redux/actions/app";
+import { showAlertDialog } from "../../redux/actions/dialogs";
 
 import styles from "../../styles/Dashboard.module.css";
 
 function NowPlayingComponent(props) {
-  const { playBack, fetchUserPlayBack } = props;
+  const { playBack, fetchUserPlayBack, showSnackbar, showAlertDialog } = props;
 
   const refreshButtonHandler = async () => {
-    await fetchUserPlayBack();
+    let fetchResponse = await fetchUserPlayBack();
+
+    switch (fetchResponse.type) {
+      case "SET_PLAYBACK_DATA":
+        await showSnackbar(
+          `Playback refreshed. Currently playing ${fetchResponse.payload.playBack.item.name}`
+        );
+
+        break;
+      case "SET_PLAYBACK_DATA_FAILED_INVALID_TOKEN":
+        await showAlertDialog(
+          {
+            title: "Session expired",
+            message: "You would required to log in again.",
+          },
+          () => (window.location.href = "/log_out")
+        );
+
+        break;
+      case "NO_PLAYBACK_DATA":
+        await showSnackbar("No song is been played.", "warning");
+        break;
+      default:
+        await showSnackbar("Failed to fetch new playback data.");
+    }
   };
 
   return (
@@ -111,6 +136,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUserPlayBack: bindActionCreators(fetchUserPlayBack, dispatch),
+  showSnackbar: bindActionCreators(showSnackbar, dispatch),
+  showAlertDialog: bindActionCreators(showAlertDialog, dispatch),
 });
 
 export default connect(

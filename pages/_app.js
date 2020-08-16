@@ -3,6 +3,7 @@ import { Provider as StoreProvider } from "react-redux";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import AppBar from "../components/shared/AppBar";
+import SharedComponents from "../components/shared/SharedComponents";
 import stores from "../redux/stores/configureStore";
 
 import "../styles/globals.css";
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps }) {
         <div className="main-container">
           <div className="main-wrapper">
             <Component {...pageProps} />
+            <SharedComponents />
           </div>
         </div>
       </ThemeProvider>
