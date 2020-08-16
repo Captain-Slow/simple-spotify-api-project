@@ -29,8 +29,8 @@ export const reducer = (state = initialState, action) => {
     case types.FETCHING_PLAYBACK_DATA: {
       return {
         ...state,
-        playback: {
-          ...state.playback,
+        playBack: {
+          ...state.playBack,
           fetching: true,
         },
       };
@@ -49,7 +49,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         playBack: {
-          ...state.playback,
+          ...state.playBack,
           fetching: false,
           playing: true,
           data: action.payload.playBack,

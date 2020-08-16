@@ -39,7 +39,7 @@ function UserAvatar(props) {
             <Avatar
               className={styles.userAvatarImg}
               style={{ width: 24, height: 24 }}
-              alt="Remy Sharp"
+              alt="Profile Pic Menu Button"
               src={user.images[0].url}
             />
           </IconButton>
@@ -60,11 +60,32 @@ function UserAvatar(props) {
           >
             <MenuItem
               className={styles.menuItem}
+              style={{ textDecoration: "none" }}
+            >
+              <Avatar
+                className={styles.userAvatarImg}
+                style={{ width: 24, height: 24, marginRight: 8 }}
+                alt="Profile Pic Menu Item"
+                src={user.images[0].url}
+              />
+              <ListItemText
+                primaryTypographyProps={{
+                  variant: "body2",
+                  style: { fontSize: "0.8rem" },
+                }}
+                primary={`${user.display_name}`}
+              />
+            </MenuItem>
+            <MenuItem
+              className={styles.menuItem}
               component={Link}
               style={{ textDecoration: "none" }}
               href="/log_out"
             >
-              <ListItemText primary="Log Out" />
+              <ListItemText
+                primaryTypographyProps={{ variant: "body2" }}
+                primary="Log Out"
+              />
             </MenuItem>
           </Menu>
         </div>
