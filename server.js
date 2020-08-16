@@ -160,7 +160,7 @@ app.prepare().then(() => {
           res.redirect(`${process.env.REDIRECT_URL}`);
         } else {
           res.redirect(
-            "/#" +
+            "/?" +
               querystring.stringify({
                 error: "invalid_token",
               })

@@ -40,6 +40,7 @@ function NowPlayingComponent(props) {
         break;
       case "NO_PLAYBACK_DATA":
         await showSnackbar("No song is been played.", "warning");
+
         break;
       default:
         await showSnackbar("Failed to fetch new playback data.");
