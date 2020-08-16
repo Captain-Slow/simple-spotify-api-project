@@ -43,12 +43,19 @@ Dashboard.getInitialProps = async (ctx) => {
     json: true,
   });
 
-  const userPlaybackJson = await getUserPlayback.json();
+  if (getUserPlayback.headers.get("content-type") !== null) {
+    const userPlaybackJson = await getUserPlayback.json();
 
-  return {
-    user: { ...query.user },
-    currentPlayback: { ...userPlaybackJson },
-  };
+    return {
+      user: { ...query.user },
+      currentPlayback: { ...userPlaybackJson },
+    };
+  } else {
+    return {
+      user: { ...query.user },
+      currentPlayback: {},
+    };
+  }
 };
 
 const mapDispatchToProps = (dispatch) => ({

@@ -44,20 +44,51 @@ export const setUser = (userData) => async (dispatch, getState) => {
 };
 
 export const setUserPlayBack = (playbackData) => async (dispatch, getState) => {
-  return dispatch({
-    type: types.SET_PLAYBACK_DATA,
-    payload: { playBack: { ...playbackData } },
+  dispatch({
+    type: types.FETCHING_PLAYBACK_DATA,
   });
+
+  if (Object.entries(playbackData).length > 0) {
+    return dispatch({
+      type: types.SET_PLAYBACK_DATA,
+      payload: { playBack: { ...playbackData } },
+    });
+  } else {
+    return dispatch({
+      type: types.NO_PLAYBACK_DATA,
+    });
+  }
 };
 
 export const fetchUserPlayBack = () => async (dispatch, getState) => {
+  dispatch({
+    type: types.FETCHING_PLAYBACK_DATA,
+  });
+
   return api
     .get("currentPlayback")
     .then((response) => {
-      return dispatch({
-        type: types.SET_PLAYBACK_DATA,
-        payload: { playBack: { ...response.data.playback } },
-      });
+      if (response.data.error === undefined) {
+        return dispatch({
+          type: types.SET_PLAYBACK_DATA,
+          payload: { playBack: { ...response.data.playback } },
+        });
+      } else {
+        if (
+          response.data.error === "Invalid tokens" ||
+          response.data.error === "No token"
+        ) {
+          window.location.href = "/log_out";
+
+          return dispatch({
+            type: types.SET_PLAYBACK_DATA_FAILED,
+          });
+        } else {
+          return dispatch({
+            type: types.NO_PLAYBACK_DATA,
+          });
+        }
+      }
     })
     .catch((error) => {
       return dispatch({

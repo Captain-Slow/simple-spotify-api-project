@@ -2,7 +2,11 @@ import * as types from "../types/app";
 
 const initialState = {
   user: {},
-  playBack: {},
+  playBack: {
+    fetching: true,
+    playing: false,
+    data: {},
+  },
   isAuthenticated: false,
   snackbar: {
     show: false,
@@ -22,6 +26,15 @@ export const reducer = (state = initialState, action) => {
         isAuthenticated: true,
       };
     }
+    case types.FETCHING_PLAYBACK_DATA: {
+      return {
+        ...state,
+        playback: {
+          ...state.playback,
+          fetching: true,
+        },
+      };
+    }
     case types.SET_PLAYBACK_DATA: {
       let playBack = action.payload.playBack;
 
@@ -35,7 +48,22 @@ export const reducer = (state = initialState, action) => {
 
       return {
         ...state,
-        playBack: action.payload.playBack,
+        playBack: {
+          ...state.playback,
+          fetching: false,
+          playing: true,
+          data: action.payload.playBack,
+        },
+      };
+    }
+    case types.NO_PLAYBACK_DATA: {
+      return {
+        ...state,
+        playBack: {
+          fetching: false,
+          playing: false,
+          data: {},
+        },
       };
     }
     case types.SHOW_SNACKBAR: {

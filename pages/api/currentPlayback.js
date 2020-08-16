@@ -18,20 +18,26 @@ export default async (req, res) => {
       }
     );
 
-    const json = await getUserPlaybackRes.json();
+    if (getUserPlaybackRes.headers.get("content-type") !== null) {
+      const json = await getUserPlaybackRes.json();
 
-    if (json.error === undefined) {
-      res.statusCode = 200;
+      if (json.error === undefined) {
+        res.statusCode = 200;
 
-      res.json({ playback: json });
+        res.json({ playback: json });
+      } else {
+        await res.clearCookie(accessToken);
+
+        await res.clearCookie(refreshToken);
+
+        res.statusCode = 200;
+
+        res.json({ error: "Invalid tokens" });
+      }
     } else {
-      await res.clearCookie(accessToken);
-
-      await res.clearCookie(refreshToken);
-
       res.statusCode = 200;
 
-      res.json({ error: "Invalid tokens" });
+      res.json({ error: "Nothing to show" });
     }
   } else {
     res.statusCode = 200;

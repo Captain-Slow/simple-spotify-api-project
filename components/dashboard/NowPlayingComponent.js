@@ -20,7 +20,7 @@ function NowPlayingComponent(props) {
 
   return (
     <div className={styles.nowPlayingContainer}>
-      {Object.entries(playBack).length > 0 ? (
+      {playBack.playing ? (
         <>
           <Card
             raised
@@ -30,16 +30,16 @@ function NowPlayingComponent(props) {
           >
             <img
               className={styles.albumImg}
-              src={playBack.item.album.images[0].url}
+              src={playBack.data.item.album.images[0].url}
             />
           </Card>
           <div className={styles.albumDetailContainer}>
             <Typography color="inherit" variant="h6" gutterBottom>
-              {playBack.item.name}
+              {playBack.data.item.name}
             </Typography>
             <div className={styles.artistTextContainer}>
               <Typography color="inherit" variant="body2" gutterBottom>
-                {playBack.item.artists_modified}
+                {playBack.data.item.artists_modified}
               </Typography>
             </div>
             <div className={styles.refreshButtonContainer}>
@@ -55,8 +55,25 @@ function NowPlayingComponent(props) {
             </div>
           </div>
         </>
-      ) : (
+      ) : playBack.fetching ? (
         <CircularProgress />
+      ) : (
+        <div style={{ color: "white" }}>
+          <Typography color="inherit" variant="h6" gutterBottom>
+            You're currently not playing any music.
+          </Typography>
+          <div className={styles.refreshButtonContainer}>
+            <Button
+              variant="outlined"
+              color="inherit"
+              size="large"
+              onClick={refreshButtonHandler}
+              endIcon={<RefreshIcon />}
+            >
+              Refresh
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );
