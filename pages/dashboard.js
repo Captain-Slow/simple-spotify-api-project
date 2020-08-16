@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Head from "next/head";
 
 import NowPlayingComponent from "../components/dashboard/NowPlayingComponent";
 import { setUser, setUserPlayBack } from "../redux/actions/app";
@@ -21,9 +22,14 @@ function Dashboard(props) {
   }, [setUser, setUserPlayBack]);
 
   return (
-    <div className={styles.dashboardContainer}>
-      <NowPlayingComponent />
-    </div>
+    <>
+      <Head>
+        <title>{`nowPlaying by Kew - ${user.display_name}'s Dashboard`}</title>
+      </Head>
+      <div className={styles.dashboardContainer}>
+        <NowPlayingComponent />
+      </div>
+    </>
   );
 }
 

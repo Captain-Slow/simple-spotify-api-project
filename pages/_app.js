@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
     <StoreProvider store={stores}>
       <ThemeProvider theme={theme}>
         <Head>
-          <title>Kew side project</title>
+          <title>nowPlaying by Kew</title>
           <link
             href="https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two&display=swap"
             rel="stylesheet"
