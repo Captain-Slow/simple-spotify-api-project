@@ -114,6 +114,8 @@ function NowPlayingComponent(props) {
 
   const playAudioHandler = () => {
     if (playButton.previewAudio !== null) {
+      playButton.previewAudio.loop = true;
+
       playButton.previewAudio.play();
     }
   };
