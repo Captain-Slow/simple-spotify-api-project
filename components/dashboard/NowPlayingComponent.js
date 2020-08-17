@@ -13,6 +13,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 import PauseRoundedIcon from "@material-ui/icons/PauseRounded";
 import Fade from "@material-ui/core/Fade";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 import { fetchUserPlayBack, showSnackbar } from "../../redux/actions/app";
 import { showAlertDialog } from "../../redux/actions/dialogs";
@@ -143,6 +144,12 @@ function NowPlayingComponent(props) {
     }
   };
 
+  const buttonClickAway = () => {
+    if (playButton.show) {
+      albumArtOnMouseHandler();
+    }
+  };
+
   return (
     <div className={styles.nowPlayingContainer}>
       {playBack.playing ? (
@@ -153,32 +160,34 @@ function NowPlayingComponent(props) {
             elevation={6}
             className={styles.albumImgContainer}
           >
-            <CardActionArea
-              className={styles.albumImgCardAction}
-              onMouseEnter={albumArtOnMouseHandler}
-              onMouseLeave={albumArtOnMouseHandler}
-              onClick={playButtonHandler}
-            >
-              <Fade in={playButton.show}>
-                <div className={styles.playButtonContainer}>
-                  {playButton.playButtonVisible ? (
-                    <PlayArrowRoundedIcon
-                      style={{ fontSize: "6rem", color: "white" }}
-                      fontSize="large"
-                    />
-                  ) : (
-                    <PauseRoundedIcon
-                      style={{ fontSize: "6rem", color: "white" }}
-                      fontSize="large"
-                    />
-                  )}
-                </div>
-              </Fade>
-              <img
-                className={styles.albumImg}
-                src={playBack.data.item.album.images[0].url}
-              />
-            </CardActionArea>
+            <ClickAwayListener onClickAway={buttonClickAway}>
+              <CardActionArea
+                className={styles.albumImgCardAction}
+                onMouseEnter={albumArtOnMouseHandler}
+                onMouseLeave={albumArtOnMouseHandler}
+                onClick={playButtonHandler}
+              >
+                <Fade in={playButton.show}>
+                  <div className={styles.playButtonContainer}>
+                    {playButton.playButtonVisible ? (
+                      <PlayArrowRoundedIcon
+                        style={{ fontSize: "6rem", color: "white" }}
+                        fontSize="large"
+                      />
+                    ) : (
+                      <PauseRoundedIcon
+                        style={{ fontSize: "6rem", color: "white" }}
+                        fontSize="large"
+                      />
+                    )}
+                  </div>
+                </Fade>
+                <img
+                  className={styles.albumImg}
+                  src={playBack.data.item.album.images[0].url}
+                />
+              </CardActionArea>
+            </ClickAwayListener>
           </Card>
           <div className={styles.albumDetailContainer}>
             <Typography color="inherit" variant="h6" gutterBottom>
