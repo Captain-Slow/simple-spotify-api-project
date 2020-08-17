@@ -69,33 +69,45 @@ export const fetchUserPlayBack = () => async (dispatch, getState) => {
   return api
     .get("currentPlayback")
     .then((response) => {
-      return setTimeout(() => {
-        if (response.data.error === undefined) {
-          return dispatch({
-            type: types.SET_PLAYBACK_DATA,
-            payload: { playBack: { ...response.data.playback } },
-          });
-        } else {
-          if (
-            response.data.error === "Invalid tokens" ||
-            response.data.error === "No token"
-          ) {
-            return dispatch({
-              type: types.SET_PLAYBACK_DATA_FAILED_INVALID_TOKEN,
-            });
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (response.data.error === undefined) {
+            resolve(
+              dispatch({
+                type: types.SET_PLAYBACK_DATA,
+                payload: { playBack: { ...response.data.playback } },
+              })
+            );
           } else {
-            return dispatch({
-              type: types.NO_PLAYBACK_DATA,
-            });
+            if (
+              response.data.error === "Invalid tokens" ||
+              response.data.error === "No token"
+            ) {
+              resolve(
+                dispatch({
+                  type: types.SET_PLAYBACK_DATA_FAILED_INVALID_TOKEN,
+                })
+              );
+            } else {
+              resolve(
+                dispatch({
+                  type: types.NO_PLAYBACK_DATA,
+                })
+              );
+            }
           }
-        }
-      }, 700);
+        }, 700);
+      });
     })
     .catch((error) => {
-      return setTimeout(() => {
-        return dispatch({
-          type: types.SET_PLAYBACK_DATA_FAILED,
-        });
-      }, 700);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(
+            dispatch({
+              type: types.SET_PLAYBACK_DATA_FAILED,
+            })
+          );
+        }, 700);
+      });
     });
 };

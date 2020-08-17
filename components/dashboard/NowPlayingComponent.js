@@ -82,7 +82,7 @@ function NowPlayingComponent(props) {
 
         break;
       default:
-        await showSnackbar("Failed to fetch new playback data.");
+        await showSnackbar("Failed to fetch new playback data.", "error");
     }
 
     if (fetchResponse.type !== "SET_PLAYBACK_DATA") {
