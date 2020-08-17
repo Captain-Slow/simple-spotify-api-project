@@ -14,7 +14,10 @@ function Home(props) {
     const initFunction = async () => {
       let searchParams = queryString.parse(location.search);
 
-      if (Object.entries(searchParams).length > 0) {
+      if (
+        Object.entries(searchParams).length > 0 &&
+        searchParams.error !== undefined
+      ) {
         switch (searchParams.error) {
           case "invalid_token":
             await showSnackbar(
