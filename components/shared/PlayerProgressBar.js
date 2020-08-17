@@ -14,6 +14,8 @@ function PlayerProgressBar(props) {
     progress: currentPercentage,
     countDownMs: currentProgress,
     countDown: millisToMinutesAndSeconds(currentProgress),
+    isPlaying: isPlaying,
+    finished: currentProgress === totalTime,
   });
 
   React.useEffect(() => {
@@ -30,6 +32,8 @@ function PlayerProgressBar(props) {
               progress: 100,
               countDownMs: totalTime,
               countDown: millisToMinutesAndSeconds(totalTime),
+              isPlaying: false,
+              finished: true,
             };
           } else {
             return {
@@ -76,7 +80,11 @@ function PlayerProgressBar(props) {
         </div>
         <div>
           <Typography variant="subtitle2">
-            {isPlaying ? "Playing..." : "Paused"}
+            {progressData.isPlaying
+              ? "Playing..."
+              : progressData.finished
+              ? "Finished"
+              : "Paused"}
           </Typography>
         </div>
       </ThemeProvider>
