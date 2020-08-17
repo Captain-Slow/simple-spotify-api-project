@@ -15,6 +15,7 @@ import PauseRoundedIcon from "@material-ui/icons/PauseRounded";
 import Fade from "@material-ui/core/Fade";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
+import PlayerProgressBar from "../shared/PlayerProgressBar";
 import { fetchUserPlayBack, showSnackbar } from "../../redux/actions/app";
 import { showAlertDialog } from "../../redux/actions/dialogs";
 
@@ -197,6 +198,13 @@ function NowPlayingComponent(props) {
               <Typography color="inherit" variant="body2" gutterBottom>
                 {playBack.data.item.artists_modified}
               </Typography>
+            </div>
+            <div className={styles.progressBarContainer}>
+              <PlayerProgressBar
+                currentProgress={playBack.data.progress_ms}
+                totalTime={playBack.data.item.duration_ms}
+                isPlaying={playBack.data.is_playing}
+              />
             </div>
             <div className={styles.deviceNameContainer}>
               <Typography

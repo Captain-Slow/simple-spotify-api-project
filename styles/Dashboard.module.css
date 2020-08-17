@@ -62,3 +62,8 @@
 .albumImgCardAction {
   position: relative;
 }
+
+.progressBarContainer {
+  max-width: 325px;
+  margin: 8px auto 16px;
+}
