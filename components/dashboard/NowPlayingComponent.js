@@ -31,7 +31,10 @@ function NowPlayingComponent(props) {
   });
 
   useEffect(() => {
-    if (prevAmount.playBack.data !== playBack.data) {
+    if (
+      prevAmount.playBack.data !== playBack.data &&
+      Object.entries(playBack.data).length > 0
+    ) {
       setPlayButton({
         ...playButton,
         previewAudio: new Audio(playBack.data.item.preview_url),
@@ -110,11 +113,15 @@ function NowPlayingComponent(props) {
   };
 
   const playAudioHandler = () => {
-    playButton.previewAudio.play();
+    if (playButton.previewAudio !== null) {
+      playButton.previewAudio.play();
+    }
   };
 
   const pauseAudioHandler = () => {
-    playButton.previewAudio.pause();
+    if (playButton.previewAudio !== null) {
+      playButton.previewAudio.pause();
+    }
   };
 
   return (
