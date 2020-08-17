@@ -69,29 +69,33 @@ export const fetchUserPlayBack = () => async (dispatch, getState) => {
   return api
     .get("currentPlayback")
     .then((response) => {
-      if (response.data.error === undefined) {
-        return dispatch({
-          type: types.SET_PLAYBACK_DATA,
-          payload: { playBack: { ...response.data.playback } },
-        });
-      } else {
-        if (
-          response.data.error === "Invalid tokens" ||
-          response.data.error === "No token"
-        ) {
+      return setTimeout(() => {
+        if (response.data.error === undefined) {
           return dispatch({
-            type: types.SET_PLAYBACK_DATA_FAILED_INVALID_TOKEN,
+            type: types.SET_PLAYBACK_DATA,
+            payload: { playBack: { ...response.data.playback } },
           });
         } else {
-          return dispatch({
-            type: types.NO_PLAYBACK_DATA,
-          });
+          if (
+            response.data.error === "Invalid tokens" ||
+            response.data.error === "No token"
+          ) {
+            return dispatch({
+              type: types.SET_PLAYBACK_DATA_FAILED_INVALID_TOKEN,
+            });
+          } else {
+            return dispatch({
+              type: types.NO_PLAYBACK_DATA,
+            });
+          }
         }
-      }
+      }, 700);
     })
     .catch((error) => {
-      return dispatch({
-        type: types.SET_PLAYBACK_DATA_FAILED,
-      });
+      return setTimeout(() => {
+        return dispatch({
+          type: types.SET_PLAYBACK_DATA_FAILED,
+        });
+      }, 700);
     });
 };

@@ -152,7 +152,7 @@ function NowPlayingComponent(props) {
 
   return (
     <div className={styles.nowPlayingContainer}>
-      {playBack.playing ? (
+      {playBack.playing && !playBack.fetching ? (
         <>
           <Card
             raised
@@ -233,7 +233,7 @@ function NowPlayingComponent(props) {
           </div>
         </>
       ) : playBack.fetching ? (
-        <CircularProgress />
+        <CircularProgress color="inherit" />
       ) : (
         <div style={{ color: "white" }}>
           <Typography color="inherit" variant="h6" gutterBottom>
