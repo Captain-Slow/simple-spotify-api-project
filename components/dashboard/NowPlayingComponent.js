@@ -100,29 +100,46 @@ function NowPlayingComponent(props) {
   };
 
   const playButtonHandler = async () => {
+    let response = false;
+
     if (playButton.playButtonVisible) {
-      playAudioHandler();
+      response = await playAudioHandler();
     } else {
-      pauseAudioHandler();
+      response = pauseAudioHandler();
     }
 
-    setPlayButton({
-      ...playButton,
-      playButtonVisible: !playButton.playButtonVisible,
-    });
+    if (response) {
+      setPlayButton({
+        ...playButton,
+        playButtonVisible: !playButton.playButtonVisible,
+      });
+    }
   };
 
-  const playAudioHandler = () => {
+  const playAudioHandler = async () => {
     if (playButton.previewAudio !== null) {
       playButton.previewAudio.loop = true;
 
-      playButton.previewAudio.play();
+      if (playButton.previewAudio.readyState >= 3) {
+        playButton.previewAudio.play();
+
+        return true;
+      } else {
+        await showSnackbar(
+          `Still loading ${playBack.data.item.name}`,
+          "warning"
+        );
+
+        return false;
+      }
     }
   };
 
-  const pauseAudioHandler = () => {
+  const pauseAudioHandler = async () => {
     if (playButton.previewAudio !== null) {
       playButton.previewAudio.pause();
+
+      return true;
     }
   };
 
